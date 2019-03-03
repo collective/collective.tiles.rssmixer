@@ -6,33 +6,20 @@
 collective.tiles.rssmixer
 =========================
 
-Tell me what your product does
+This product provides a tile that can fetch RSS feeds from multiple sources and show them together.
 
-Features
---------
+Usage
+-----
 
-- Can be bullet points
-
-
-Examples
---------
-
-This add-on can be seen in action at the following sites:
-- Is there a page on the internet where everybody can see the features?
-
-
-Documentation
--------------
-
-Full documentation for end users can be found in the "docs" folder, and is also available online at http://docs.plone.org/foo/bar
-
+The tile has a set of parameters that allows to configure source feeds and how to render them.
+You can set a list of RSS feed urls. Results will be mixed and sorted by date.
 
 Translations
 ------------
 
 This product has been translated into
 
-- Klingon (thanks, K'Plai)
+- Italian
 
 
 Installation
@@ -56,7 +43,6 @@ Contribute
 
 - Issue Tracker: https://github.com/collective/collective.tiles.rssmixer/issues
 - Source Code: https://github.com/collective/collective.tiles.rssmixer
-- Documentation: https://docs.plone.org/foo/bar
 
 
 Support

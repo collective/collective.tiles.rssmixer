@@ -7,21 +7,14 @@
 
   <i18n:registerTranslations directory="locales" />
 
-  <!--
-    Be careful if you use general includeDependencies, it can have sideffects!
-    Better import explicite packages or configurations ;)
-  -->
-  <!--<includeDependencies package="." />-->
+  <includeDependencies package="." />
 
   <include package=".browser" />
-
-  <include file="permissions.zcml" />
-
-  <include file="upgrades.zcml" />
+  <include package="plone.app.tiles"/>
 
   <genericsetup:registerProfile
       name="default"
-      title="collective.tiles.rssmixer"
+      title="Collective tiles: rssmixer"
       directory="profiles/default"
       description="Installs the collective.tiles.rssmixer add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -29,8 +22,16 @@
       />
 
   <genericsetup:registerProfile
+      name="mosaic_support"
+      title="Collective tiles: rssmixer mosaic support"
+      directory="profiles/mosaic_support"
+      description="Add this tile to mosaic list."
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      />
+
+  <genericsetup:registerProfile
       name="uninstall"
-      title="collective.tiles.rssmixer (uninstall)"
+      title="Collective tiles: rssmixer (uninstall)"
       directory="profiles/uninstall"
       description="Uninstalls the collective.tiles.rssmixer add-on."
       provides="Products.GenericSetup.interfaces.EXTENSION"
@@ -39,9 +40,19 @@
 
   <utility
       factory=".setuphandlers.HiddenProfiles"
-      name="collective.tiles.rssmixer-hiddenprofiles"
-      />
+      name="collective.tiles.rssmixer-hiddenprofiles" />
 
-  <!-- -*- extra stuff goes here -*- -->
+  <plone:tile
+      name="collective.tiles.rssmixer"
+      title="RSS mixer tile"
+      description="A tile that shows results from different RSS feeds"
+      schema=".rssmixer.IRSSMixerTile"
+      class=".rssmixer.RSSMixerTile"
+      template="rssmixer.pt"
+      add_permission="cmf.ModifyPortalContent"
+      permission="zope2.View"
+      layer="collective.tiles.rssmixer.interfaces.ICollectiveTilesRssmixerLayer"
+      for="*"
+      />
 
 </configure>

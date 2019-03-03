@@ -1,0 +1,70 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xml:lang="en"
+      lang="en"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      i18n:domain="collective.tiles.rssmixer">
+  <body>
+    <tal:block tal:define="
+        tile_id view/id;
+        results view/items;
+        toLocalizedTime nocall:context/@@plone/toLocalizedTime">
+      <div class="rss-mixer-tile ${view/data/css_class}"
+           data-tileid="${tile_id}">
+        <tal:results tal:condition="results">
+            <h2 class="tileTitle"
+                tal:condition="view/data/title">
+                ${view/data/title}
+            </h2>
+            <!-- BODY -->
+            <div class="tileBody">
+                <tal:feed repeat="feed results">
+                    <div class="feed-wrapper"
+                        tal:define="url feed/url|nothing;
+                                    title feed/title|nothing;
+                                    summary feed/summary|nothing;
+                                    updated feed/updated|nothing;
+                                    show_dates python:view.data.get('show_dates', False);
+                                    show_source python:view.data.get('show_source', False);
+                                    source feed/source|nothing">
+                        <div class="feed-metadata"
+                             tal:condition="python:show_dates or show_source">
+                            <span 
+                                class="feed-updated"
+                                tal:condition="python:show_dates and updated"
+                                tal:content="python:toLocalizedTime(updated)" />
+                            <tal:separator condition="python:(show_dates and updated) and (show_source and source)">
+                                &mdash;
+                            </tal:separator>
+                            <span 
+                                class="feed-source"
+                                tal:condition="python:source and view.data.get('show_source')">${source}</span>
+                        </div>
+                        <a href="${url}" title="${title}">
+                            <h3>${title}</h3>
+                        </a>
+                        <div tal:condition="summary"
+                            class="feed-summary">
+                            ${summary}
+                        </div>
+                    </div>
+                </tal:feed>
+            </div>
+        </tal:results>
+        <tal:not-results tal:condition="python: not results and view.can_edit">
+            <div class="tile-rss-mixer empty">
+                <div class="tile-rss-mixer-container">
+                <h2 tal:define="title view/data/title|nothing;"
+                    class="tileTitle"
+                    tal:condition="title">${title}</h2>
+                <p class="noResults"
+                    i18n:translate="tiles_rss-mixer_nothing_to_show">
+                    Tile not rendered cause there is no content to show.
+                </p>
+                </div>
+            </div>
+        </tal:not-results>
+      </div>
+    </tal:block>
+  </body>
+</html>
