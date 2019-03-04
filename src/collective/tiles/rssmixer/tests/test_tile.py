@@ -25,7 +25,7 @@ class RSSTileTest(TestCase):
         self.browser.handleErrors = False
         self.browser.addHeader(
             'Authorization',
-            'Basic %s:%s' % (TEST_USER_NAME, TEST_USER_PASSWORD),
+            'Basic {0}:{1}'.format(TEST_USER_NAME, TEST_USER_PASSWORD),
         )
 
         self.unprivileged_browser = Browser(self.layer['app'])
