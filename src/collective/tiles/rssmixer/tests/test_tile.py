@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from collective.tiles.rssmixer.testing import (
     COLLECTIVE_TILES_RSSMIXER_FUNCTIONAL_TESTING,
-)
+)  # noqa
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
 from plone.app.testing import TEST_USER_NAME
@@ -10,8 +10,8 @@ from plone.testing.z2 import Browser
 from unittest import TestCase
 from urllib import urlencode
 
-import os
 import collective.tiles.rssmixer.tests as test_dir
+import os
 
 
 class RSSTileTest(TestCase):

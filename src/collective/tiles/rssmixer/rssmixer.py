@@ -29,11 +29,11 @@ FEED_DATA = {}  # url: ({date, title, url, itemlist})
 class IRSSMixerTile(Schema):
     """RSS tile schema interface."""
 
-    title = schema.TextLine(title=_(u"Title"), required=True, default=u'')
+    title = schema.TextLine(title=_(u'Title'), required=True, default=u'')
 
     count = schema.Int(
-        title=_(u"Number of items to display"),
-        description=_(u"How many items to list."),
+        title=_(u'Number of items to display'),
+        description=_(u'How many items to list.'),
         required=True,
         default=5,
     )
@@ -41,8 +41,8 @@ class IRSSMixerTile(Schema):
     urls = schema.List(
         title=_(u'List of RSS feeds'),
         description=_(
-            u"Enter a list of RSS feeds (one per line) in the following shape:"
-            u" source name|url."
+            u'Enter a list of RSS feeds (one per line) in the following shape:'
+            u' source name|url.'
         ),
         value_type=schema.TextLine(),
         required=True,
@@ -50,25 +50,25 @@ class IRSSMixerTile(Schema):
     )
 
     timeout = schema.Int(
-        title=_(u"Feed reload timeout"),
+        title=_(u'Feed reload timeout'),
         description=_(
-            u"Time in minutes after which the feed should be " u"reloaded."
+            u'Time in minutes after which the feed should be ' u'reloaded.'
         ),
         required=True,
         default=100,
     )
     show_dates = schema.Bool(
-        title=_(u"Show dates"),
+        title=_(u'Show dates'),
         description=_(
-            u"If enabled, last update date for a feed will be shown."
+            u'If enabled, last update date for a feed will be shown.'
         ),
         required=True,
         default=True,
     )
 
     show_source = schema.Bool(
-        title=_(u"Show source name"),
-        description=_(u"If enabled, feed source name will be shown."),
+        title=_(u'Show source name'),
+        description=_(u'If enabled, feed source name will be shown.'),
         required=True,
         default=True,
     )
@@ -250,8 +250,8 @@ class RSSMixerFeed(object):
         self.timeout = timeout
         self.source = source
         self._items = []
-        self._title = ""
-        self._siteurl = ""
+        self._title = ''
+        self._siteurl = ''
         self._loaded = False  # is the feed loaded
         self._failed = False  # does it fail at the last update?
         self._last_update_time_in_minutes = 0  # when was the feed updated?
@@ -353,7 +353,7 @@ class RSSMixerFeed(object):
                         'summary': item.get('description', ''),
                         'source': self.source,
                     }
-                    if hasattr(item, "updated"):
+                    if hasattr(item, 'updated'):
                         itemdict['updated'] = DateTime(item.updated)
                 except AttributeError:
                     continue
@@ -376,7 +376,7 @@ class RSSMixerFeed(object):
     @property
     def feed_link(self):
         """Return rss url of feed for tile."""
-        return self.url.replace("http://", "feed://")
+        return self.url.replace('http://', 'feed://')
 
     @property
     def title(self):
