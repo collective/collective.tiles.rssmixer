@@ -1,0 +1,106 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2019-03-04 11:18+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: utf-8 latin1\n"
+"Domain: DOMAIN\n"
+
+#: ../configure.zcml:56
+msgid "A tile that shows results from different RSS feeds"
+msgstr ""
+
+#: ../configure.zcml:29
+msgid "Add this tile to mosaic list."
+msgstr ""
+
+#: ../configure.zcml:21
+msgid "Collective tiles: rssmixer"
+msgstr ""
+
+#: ../configure.zcml:38
+msgid "Collective tiles: rssmixer (uninstall)"
+msgstr ""
+
+#: ../configure.zcml:29
+msgid "Collective tiles: rssmixer mosaic support"
+msgstr ""
+
+#: ../rssmixer.py:43
+msgid "Enter a list of RSS feeds (one per line) in the following shape: source name|url."
+msgstr ""
+
+#: ../rssmixer.py:53
+msgid "Feed reload timeout"
+msgstr ""
+
+#: ../rssmixer.py:36
+msgid "How many items to list."
+msgstr ""
+
+#: ../rssmixer.py:71
+msgid "If enabled, feed source name will be shown."
+msgstr ""
+
+#: ../rssmixer.py:62
+msgid "If enabled, last update date for a feed will be shown."
+msgstr ""
+
+#: ../configure.zcml:21
+msgid "Installs the collective.tiles.rssmixer add-on."
+msgstr ""
+
+#: ../rssmixer.py:42
+msgid "List of RSS feeds"
+msgstr ""
+
+#: ../rssmixer.py:35
+msgid "Number of items to display"
+msgstr ""
+
+#: ../configure.zcml:56
+msgid "RSS mixer tile"
+msgstr ""
+
+#: ../rssmixer.py:61
+msgid "Show dates"
+msgstr ""
+
+#: ../rssmixer.py:70
+msgid "Show source name"
+msgstr ""
+
+#: ../rssmixer.py:54
+msgid "Time in minutes after which the feed should be reloaded."
+msgstr ""
+
+#: ../rssmixer.py:32
+msgid "Title"
+msgstr ""
+
+#: ../configure.zcml:38
+msgid "Uninstalls the collective.tiles.rssmixer add-on."
+msgstr ""
+
+#. Default: "CSS class"
+#: ../rssmixer.py:76
+msgid "collection_tile_css_class"
+msgstr ""
+
+#. Default: "Insert a list of additional css classes for this tile."
+#: ../rssmixer.py:77
+msgid "collection_tile_css_class_help"
+msgstr ""
+
+#. Default: "Tile not rendered cause there is no content to show."
+#: ../rssmixer.pt:58
+msgid "tiles_rss-mixer_nothing_to_show"
+msgstr ""

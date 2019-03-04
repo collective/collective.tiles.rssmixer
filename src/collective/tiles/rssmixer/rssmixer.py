@@ -1,17 +1,18 @@
 # -*- coding: utf-8 -*-
-from DateTime import DateTime
 from collective.tiles.rssmixer import _
+from DateTime import DateTime
+from plone import api
 from plone.supermodel.model import Schema
 from plone.tiles.tile import Tile
+from socket import timeout
+from urllib2 import urlopen
 from zope import schema
 from zope.component import getMultiAdapter
 from zope.interface import implementer
 from zope.interface import Interface
-from requests.exceptions import Timeout
 
 import feedparser
 import logging
-import requests
 import time
 
 
@@ -28,15 +29,7 @@ FEED_DATA = {}  # url: ({date, title, url, itemlist})
 class IRSSMixerTile(Schema):
     """RSS tile schema interface."""
 
-    title = schema.TextLine(
-        title=_(u"Title"),
-        description=_(
-            u"Title of the portlet. If omitted, the title of the "
-            u"feed will be used."
-        ),
-        required=False,
-        default=u'',
-    )
+    title = schema.TextLine(title=_(u"Title"), required=True, default=u'')
 
     count = schema.Int(
         title=_(u"Number of items to display"),
@@ -113,38 +106,43 @@ class RSSMixerTile(Tile):
     def _getFeeds(self):
         """Return all feeds"""
         feeds = []  # a list of feed objects
-
         for feed_data in self.data.get('urls', []):
-            source, url = feed_data.split('|')
+            if not feed_data:
+                continue
+            if "|" not in feed_data:
+                url = feed_data
+                source = ''
+            else:
+                source, url = feed_data.split('|')
             feed = FEED_DATA.get(url, None)
             if feed is None:
                 # create it
                 feed = FEED_DATA[url] = RSSMixerFeed(
                     url=url,
                     source=source,
-                    timeout=self.data.get('timeout', 100),
+                    timeout=self.data.get('timeout', 100) or 100,
                 )
             feeds.append(feed)
         return feeds
 
     @property
     def feedurl(self):
-        """return url of feed for portlet"""
+        """return url of feed for tile"""
         return self._getFeed().url
 
     @property
     def siteurl(self):
-        """return url of site for portlet"""
+        """return url of site for tile"""
         return self._getFeed().siteurl
 
     @property
     def feedlink(self):
-        """return rss url of feed for portlet"""
+        """return rss url of feed for tile"""
         return self.data.get('url').replace("http://", "feed://")
 
     @property
     def title(self):
-        """return title of feed for portlet"""
+        """return title of feed for tile"""
         return self.data.get('title', '') or self._getFeed().title
 
     @property
@@ -159,7 +157,6 @@ class RSSMixerTile(Tile):
 
         itemsWithDate = []
         itemsWithoutDate = []
-
         for feed in feeds:
             for item in feed.items:
                 if 'updated' in item:
@@ -177,7 +174,7 @@ class RSSMixerTile(Tile):
     def items(self):
         """View feeds sorted by date"""
         feeds = self._getFeeds()
-        number_of_items_to_display = self.data.get('count')
+        number_of_items_to_display = self.data.get('count') or 5
         number_of_sources = len(self.data.get('urls', []))
         return self.sortingForData(
             number_of_sources, number_of_items_to_display, feeds
@@ -186,6 +183,14 @@ class RSSMixerTile(Tile):
     @property
     def enabled(self):
         return self._getFeed().ok
+
+    def can_edit(self):
+        if api.user.is_anonymous():
+            return False
+        current = api.user.get_current()
+        return api.user.has_permission(
+            'Modify portal content', username=current.id, obj=self.context
+        )
 
 
 class IRSSMixerFeed(Interface):
@@ -300,20 +305,22 @@ class RSSMixerFeed(object):
 
     def _getFeedFromUrl(self, url):
         """
-        Use requests to retrieve an rss feed.
+        Use urllib to retrieve an rss feed.
         In this way, we can manage timeouts.
         """
         try:
-            res = requests.get(url, timeout=5)
-        except Timeout as e:
+            res = urlopen(url, timeout=5)
+        except timeout as e:
             logger.exception(e)
-            return ''
-        if not res.ok or res.status_code != 200:
+            return None
+        if res.code != 200:
             logger.error(
-                'Unable to retrieve RSS feed from "{0}": {1} - {2}'
-            ).format(url, res.status_code, res.reason)
-            return ''
-        return res.text
+                'Unable to retrieve RSS feed from "{0}": {1}'.format(
+                    url, res.code
+                )
+            )
+            return None
+        return feedparser.parse(res.read())
 
     def _retrieveFeed(self):
         """Do the actual work and try to retrieve the feed."""
@@ -321,23 +328,23 @@ class RSSMixerFeed(object):
         if url != '':
             self._last_update_time_in_minutes = time.time() / 60
             self._last_update_time = DateTime()
-            feed_str = self._getFeedFromUrl(url)
-            if not feed_str:
+            parsed_feed = self._getFeedFromUrl(url)
+            if not parsed_feed:
                 self._loaded = True  # we tried at least but have a failed load
                 self._failed = True
                 return False
-            d = feedparser.parse(feed_str)
-            if d.bozo == 1 and not isinstance(
-                d.get('bozo_exception'), ACCEPTED_FEEDPARSER_EXCEPTIONS
+            if parsed_feed.bozo == 1 and not isinstance(
+                parsed_feed.get('bozo_exception'),
+                ACCEPTED_FEEDPARSER_EXCEPTIONS,
             ):
                 self._loaded = True  # we tried at least but have a failed load
                 self._failed = True
                 return False
-            self._title = d.feed.title
-            self._siteurl = d.feed.link
+            self._title = parsed_feed.feed.title
+            self._siteurl = parsed_feed.feed.link
             self._items = []
 
-            for item in d['items']:
+            for item in parsed_feed['items']:
                 try:
                     link = item.links[0]['href']
                     itemdict = {
@@ -368,12 +375,12 @@ class RSSMixerFeed(object):
 
     @property
     def feed_link(self):
-        """Return rss url of feed for portlet."""
+        """Return rss url of feed for tile."""
         return self.url.replace("http://", "feed://")
 
     @property
     def title(self):
-        """Return title of feed for portlet."""
+        """Return title of feed for tile."""
         return self._title
 
     @property

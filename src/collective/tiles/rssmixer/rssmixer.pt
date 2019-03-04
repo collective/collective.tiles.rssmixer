@@ -29,16 +29,14 @@
                                     source feed/source|nothing">
                         <div class="feed-metadata"
                              tal:condition="python:show_dates or show_source">
-                            <span 
-                                class="feed-updated"
+                            <span class="feed-updated"
                                 tal:condition="python:show_dates and updated"
                                 tal:content="python:toLocalizedTime(updated)" />
                             <tal:separator condition="python:(show_dates and updated) and (show_source and source)">
                                 &mdash;
                             </tal:separator>
-                            <span 
-                                class="feed-source"
-                                tal:condition="python:source and view.data.get('show_source')">${source}</span>
+                            <span class="feed-source"
+                                  tal:condition="python:source and view.data.get('show_source')">${source}</span>
                         </div>
                         <a href="${url}" title="${title}">
                             <h3>${title}</h3>

@@ -1,6 +1,3 @@
-# --- PLEASE EDIT THE LINES BELOW CORRECTLY ---
-# SOME DESCRIPTIVE TITLE.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
@@ -15,15 +12,15 @@ msgstr ""
 "Language-Code: en\n"
 "Language-Name: English\n"
 "Preferred-Encodings: utf-8 latin1\n"
-"Domain: collective.tiles.rssmixer\n"
+"Domain: DOMAIN\n"
 
 #: ../configure.zcml:56
 msgid "A tile that shows results from different RSS feeds"
-msgstr ""
+msgstr "Una tile che mostra fedd RSS provenienti da fonti diverse"
 
 #: ../configure.zcml:29
 msgid "Add this tile to mosaic list."
-msgstr ""
+msgstr "Aggiungi questa tile alla lista di Mosaic."
 
 #: ../configure.zcml:21
 msgid "Collective tiles: rssmixer"
@@ -39,23 +36,23 @@ msgstr ""
 
 #: ../rssmixer.py:43
 msgid "Enter a list of RSS feeds (one per line) in the following shape: source name|url."
-msgstr ""
+msgstr "Inserisci una lista di feed RSS (uno per riga) nel seguente formato: nome fonte|url."
 
 #: ../rssmixer.py:53
 msgid "Feed reload timeout"
-msgstr ""
+msgstr "Timeout per il reload del feed"
 
 #: ../rssmixer.py:36
 msgid "How many items to list."
-msgstr ""
+msgstr "Quanti elementi mostrare."
 
 #: ../rssmixer.py:71
 msgid "If enabled, feed source name will be shown."
-msgstr ""
+msgstr "Se abilitato, il nome della fonte verrà mostrato."
 
 #: ../rssmixer.py:62
 msgid "If enabled, last update date for a feed will be shown."
-msgstr ""
+msgstr "Se abilitato, la data di ultima modifica del feed verrà mostrata."
 
 #: ../configure.zcml:21
 msgid "Installs the collective.tiles.rssmixer add-on."
@@ -63,31 +60,31 @@ msgstr ""
 
 #: ../rssmixer.py:42
 msgid "List of RSS feeds"
-msgstr ""
+msgstr "Lista di feed RSS"
 
 #: ../rssmixer.py:35
 msgid "Number of items to display"
-msgstr ""
+msgstr "Numero di elementi da mostrare"
 
 #: ../configure.zcml:56
 msgid "RSS mixer tile"
-msgstr ""
+msgstr "Tile RSS mixer"
 
 #: ../rssmixer.py:61
 msgid "Show dates"
-msgstr ""
+msgstr "Mostra le date"
 
 #: ../rssmixer.py:70
 msgid "Show source name"
-msgstr ""
+msgstr "Mostra le fonti"
 
 #: ../rssmixer.py:54
 msgid "Time in minutes after which the feed should be reloaded."
-msgstr ""
+msgstr "Tempo (in minuti) dopo il quale un feed deve essere aggiornato."
 
 #: ../rssmixer.py:32
 msgid "Title"
-msgstr ""
+msgstr "Titolo"
 
 #: ../configure.zcml:38
 msgid "Uninstalls the collective.tiles.rssmixer add-on."
@@ -96,14 +93,14 @@ msgstr ""
 #. Default: "CSS class"
 #: ../rssmixer.py:76
 msgid "collection_tile_css_class"
-msgstr ""
+msgstr "Classe CSS"
 
 #. Default: "Insert a list of additional css classes for this tile."
 #: ../rssmixer.py:77
 msgid "collection_tile_css_class_help"
-msgstr ""
+msgstr "Inserisci una lista di classi CSS aggiuntive per questa tile."
 
 #. Default: "Tile not rendered cause there is no content to show."
 #: ../rssmixer.pt:58
 msgid "tiles_rss-mixer_nothing_to_show"
-msgstr ""
+msgstr "Tile non visualizzata perché non ha prodotto nessun contenuto."

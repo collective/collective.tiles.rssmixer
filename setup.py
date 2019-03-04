@@ -43,6 +43,7 @@ setup(
     install_requires=[
         # -*- Extra requirements: -*-
         'plone.api>=1.8.4',
+        'plone.app.tiles',
         'Products.GenericSetup>=1.8.2',
         'requests',
         'setuptools',

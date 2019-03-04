@@ -9,7 +9,6 @@
 
   <includeDependencies package="." />
 
-  <include package=".browser" />
   <include package="plone.app.tiles"/>
 
   <genericsetup:registerProfile
@@ -53,6 +52,7 @@
       permission="zope2.View"
       layer="collective.tiles.rssmixer.interfaces.ICollectiveTilesRssmixerLayer"
       for="*"
+      i18n:attributes="title"
       />
 
 </configure>
