@@ -313,7 +313,7 @@ class RSSMixerFeed(object):
         except timeout as e:
             logger.exception(e)
             return None
-        if res.code != 200:
+        if res.code and res.code != 200:
             logger.error(
                 'Unable to retrieve RSS feed from "{0}": {1}'.format(
                     url, res.code

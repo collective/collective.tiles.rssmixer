@@ -52,7 +52,6 @@
       permission="zope2.View"
       layer="collective.tiles.rssmixer.interfaces.ICollectiveTilesRssmixerLayer"
       for="*"
-      i18n:attributes="title"
       />
 
 </configure>
