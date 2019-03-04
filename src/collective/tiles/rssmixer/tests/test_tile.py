@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
-from collective.tiles.rssmixer.testing import (
-    COLLECTIVE_TILES_RSSMIXER_FUNCTIONAL_TESTING,
+from collective.tiles.rssmixer.testing import (  # noqa
+    COLLECTIVE_TILES_RSSMIXER_FUNCTIONAL_TESTING,  # noqa
 )  # noqa
 from plone.app.testing import setRoles
 from plone.app.testing import TEST_USER_ID
@@ -32,8 +32,8 @@ class RSSTileTest(TestCase):
         setRoles(self.portal, TEST_USER_ID, ['Manager'])
 
         dirname = os.path.dirname(test_dir.__file__)
-        self.foo_rss = 'file://{0}'.format(os.path.join(dirname, 'RSS-foo.xml'))
-        self.bar_rss = 'file://{0}'.format(os.path.join(dirname, 'RSS-bar.xml'))
+        self.foo = 'file://{0}'.format(os.path.join(dirname, 'RSS-foo.xml'))
+        self.bar = 'file://{0}'.format(os.path.join(dirname, 'RSS-bar.xml'))
 
     def test_rss_tile(self):
         """This tile shows the first five items in a RSS feed.
@@ -42,7 +42,7 @@ class RSSTileTest(TestCase):
         # Use the RSS stored in the test directory, this way we don't have an
         # external dependency.
 
-        query = {'urls': [self.foo_rss, '']}
+        query = {'urls': [self.foo, '']}
         url = '{0}/@@collective.tiles.rssmixer/unique?{1}'.format(
             self.portalURL, urlencode(query, doseq=True)
         )
@@ -60,10 +60,7 @@ class RSSTileTest(TestCase):
 
         """
         query = {
-            'urls': [
-                'foo|{0}'.format(self.foo_rss),
-                'bar|{0}'.format(self.bar_rss),
-            ],
+            'urls': ['foo|{0}'.format(self.foo), 'bar|{0}'.format(self.bar)],
             'show_source': True,
         }
         url = '{0}/@@collective.tiles.rssmixer/unique?{1}'.format(

@@ -109,7 +109,7 @@ class RSSMixerTile(Tile):
         for feed_data in self.data.get('urls', []):
             if not feed_data:
                 continue
-            if "|" not in feed_data:
+            if '|' not in feed_data:
                 url = feed_data
                 source = ''
             else:
@@ -138,7 +138,7 @@ class RSSMixerTile(Tile):
     @property
     def feedlink(self):
         """return rss url of feed for tile"""
-        return self.data.get('url').replace("http://", "feed://")
+        return self.data.get('url').replace('http://', 'feed://')
 
     @property
     def title(self):
@@ -167,7 +167,8 @@ class RSSMixerTile(Tile):
         decorated = [(item['updated'], item) for item in itemsWithDate]
         decorated.sort(reverse=True)
         sortedItems = [item for (key, item) in decorated]
-        sortedItems[len(sortedItems) :] = itemsWithoutDate
+        len_sortedItems = len(sortedItems)
+        sortedItems[len_sortedItems:] = itemsWithoutDate
         return sortedItems[:number_of_items_to_display]
 
     @property
@@ -240,9 +241,6 @@ class IRSSMixerFeed(Interface):
 class RSSMixerFeed(object):
     """An RSS feed."""
 
-    # TODO: discuss whether we want an increasing update time here, probably
-    # not though
-    # time in minutes after which we retry to load it after a failure
     FAILURE_DELAY = 10
 
     def __init__(self, url, source, timeout):
@@ -353,7 +351,7 @@ class RSSMixerFeed(object):
                         'summary': item.get('description', ''),
                         'source': self.source,
                     }
-                    if hasattr(item, 'updated'):
+                    if getattr(item, 'updated', None):
                         itemdict['updated'] = DateTime(item.updated)
                 except AttributeError:
                     continue
