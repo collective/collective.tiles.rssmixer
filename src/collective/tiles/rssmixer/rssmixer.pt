@@ -7,8 +7,10 @@
   <body>
     <tal:block tal:define="tile_id view/id;
                            results view/items;
+                           showCarousel python:'carousel' in (view.data.get('css_class') or '');
+                           cssClass python: showCarousel and 'tile-' + tile_id + ' pat-slider' or 'tile-' + tile_id;
                            toLocalizedTime nocall:context/@@plone/toLocalizedTime">
-      <div class="rss-mixer-tile ${view/data/css_class}"
+      <div class="collectionTile rss-mixer-tile ${view/data/css_class}"
            data-tileid="${tile_id}">
         <div class="tile-container">
           <tal:results tal:condition="results">
@@ -17,35 +19,37 @@
                   ${view/data/title}
               </h2>
               <div class="tileBody">
-                  <tal:feed repeat="feed results">
-                      <div class="feed-wrapper"
-                           tal:define="url feed/url|nothing;
-                                       title feed/title|nothing;
-                                       summary feed/summary|nothing;
-                                       updated feed/updated|nothing;
-                                       show_dates python:view.data.get('show_dates', False);
-                                       show_source python:view.data.get('show_source', False);
-                                       source feed/source|nothing">
-                          <div class="feed-metadata"
-                               tal:condition="python:show_dates or show_source">
-                              <span class="feed-updated"
-                                    tal:condition="python:show_dates and updated"
-                                    tal:content="python:toLocalizedTime(updated)" />
-                              <tal:separator condition="python:(show_dates and updated) and (show_source and source)">
-                                  &mdash;
-                              </tal:separator>
-                              <span class="feed-source"
-                                    tal:condition="python:source and view.data.get('show_source')">${source}</span>
-                          </div>
-                          <a href="${url}" title="${title}">
-                              <h3>${title}</h3>
-                          </a>
-                          <div tal:condition="summary"
-                               class="feed-summary">
-                              ${summary}
-                          </div>
-                      </div>
-                  </tal:feed>
+                 <div class="feed-results ${cssClass}" data-pat-slider='{ "initialSlide": 0, "slidesToShow": 3, "slidesToScroll": 1, "appendArrows": ".tile-${tile_id}", "responsive": [{ "breakpoint": 768, "settings": { "slidesToShow": 1, "slidesToScroll": 1 } }] }'>
+                    <tal:feed repeat="feed results">
+                        <div class="feed-wrapper"
+                             tal:define="url feed/url|nothing;
+                                         title feed/title|nothing;
+                                         summary feed/summary|nothing;
+                                         updated feed/updated|nothing;
+                                         show_dates python:view.data.get('show_dates', False);
+                                         show_source python:view.data.get('show_source', False);
+                                         source feed/source|nothing">
+                            <div class="feed-metadata"
+                                 tal:condition="python:show_dates or show_source">
+                                <span class="feed-updated"
+                                      tal:condition="python:show_dates and updated"
+                                      tal:content="python:toLocalizedTime(updated)" />
+                                <tal:separator condition="python:(show_dates and updated) and (show_source and source)">
+                                    &mdash;
+                                </tal:separator>
+                                <span class="feed-source"
+                                      tal:condition="python:source and view.data.get('show_source')">${source}</span>
+                            </div>
+                            <a href="${url}" title="${title}">
+                                <h3>${title}</h3>
+                            </a>
+                            <div tal:condition="summary"
+                                 class="feed-summary">
+                                ${summary}
+                            </div>
+                        </div>
+                    </tal:feed>
+                 </div>
               </div>
           </tal:results>
           <tal:not-results tal:condition="python: not results and view.can_edit">
