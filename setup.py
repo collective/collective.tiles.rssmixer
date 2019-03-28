@@ -16,7 +16,7 @@ long_description = '\n\n'.join(
 
 setup(
     name='collective.tiles.rssmixer',
-    version='0.1.1.dev0',
+    version='0.1.1',
     description="Provides a tile that fetch RSS feeds from multiple sources",
     long_description=long_description,
     # Get more from https://pypi.python.org/pypi?%3Aaction=list_classifiers

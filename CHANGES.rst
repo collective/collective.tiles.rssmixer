@@ -2,7 +2,7 @@ Changelog
 =========
 
 
-0.1.1 (unreleased)
+0.1.1 (2019-03-28)
 ------------------
 
 - Added support for pat-slider [nzambello]
