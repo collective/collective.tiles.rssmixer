@@ -8,7 +8,7 @@ from plone.app.testing import TEST_USER_NAME
 from plone.app.testing import TEST_USER_PASSWORD
 from plone.testing.z2 import Browser
 from unittest import TestCase
-from urllib import urlencode
+from six.moves.urllib.parse import urlencode
 
 import collective.tiles.rssmixer.tests as test_dir
 import os
