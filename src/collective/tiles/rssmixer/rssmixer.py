@@ -5,7 +5,7 @@ from plone import api
 from plone.supermodel.model import Schema
 from plone.tiles.tile import Tile
 from socket import timeout
-from urllib2 import urlopen
+from six.moves.urllib.request import urlopen
 from zope import schema
 from zope.component import getMultiAdapter
 from zope.interface import implementer
@@ -165,7 +165,7 @@ class RSSMixerTile(Tile):
                     itemsWithoutDate.append(item)
 
         decorated = [(item['updated'], item) for item in itemsWithDate]
-        decorated.sort(reverse=True)
+        decorated.sort(key=lambda x: x[0], reverse=True)
         sortedItems = [item for (key, item) in decorated]
         len_sortedItems = len(sortedItems)
         sortedItems[len_sortedItems:] = itemsWithoutDate

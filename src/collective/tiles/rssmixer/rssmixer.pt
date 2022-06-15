@@ -44,8 +44,9 @@
                                 <h3>${title}</h3>
                             </a>
                             <div tal:condition="summary"
-                                 class="feed-summary">
-                                ${summary}
+                                 class="feed-summary"
+                                 tal:content="structure summary">
+                                    summary
                             </div>
                         </div>
                     </tal:feed>
